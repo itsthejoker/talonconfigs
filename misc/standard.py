@@ -42,7 +42,7 @@ keymap.update(
         "cd": "cd ",
         "cd talon home": "cd {}\n".format(TALON_HOME),
         "cd talon user": "cd {}\n".format(TALON_USER),
-        "cd talon [user] emily": "cd {}/emily\n".format(TALON_USER),
+        "cd talon [user] joe": "cd {}/joe\n".format(TALON_USER),
         "cd talon plugins": "cd {}\n".format(TALON_PLUGINS),
         "talon logs": "cd {} && tail -f talon.log\n".format(TALON_HOME),
         "grep": "grep ",

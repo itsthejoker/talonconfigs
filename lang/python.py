@@ -1,5 +1,7 @@
 from talon.voice import Context, Key
 
+# from user.misc.my_utils import snake_text, smash_title_text
+#sdlsdl
 context = Context("python")
 
 context.keymap(
@@ -26,5 +28,8 @@ context.keymap(
         "self taught": "self.",
         "from import": ["from import ", Key("alt-left"), Key("space"), Key("left")],
         "for in": ["for in ", Key("alt-left"), Key("space"), Key("left")],
+        "set trace": "import ipdb; ipdb.set_trace()",
+        # "start function <dgndictation> [over]": ["def ", snake_text, "():", Key("left"), Key("left")],
+        # "start class <dgndictation> [over]": ['class ', smash_title_text, "():", Key("left"), Key("left")],
     }
 )
