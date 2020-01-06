@@ -1,3 +1,4 @@
+from talon import app
 from talon.voice import Context, Str, press
 import string
 
@@ -29,15 +30,31 @@ symbols = {
     "equals": "=",
 }
 modifiers = {
-    "command": "cmd",
     "control": "ctrl",
     "shift": "shift",
     "alt": "alt",
-    "option": "alt",
 }
+if app.platform == "mac":
+    modifiers["command"] = "cmd"
+    modifiers["option"] = "alt"
+elif app.platform == "windows":
+    modifiers["windows"] = "win"
+elif app.platform == "linux":
+    modifiers["super"] = "super"
 
 alphabet = dict(zip(alpha_alt, string.ascii_lowercase))
-digits = {str(i): str(i) for i in range(10)}
+digits = {
+    "zero":  "0",
+    "one":   "1",
+    "two":   "2",
+    "three": "3",
+    "four":  "4",
+    "five":  "5",
+    "six":   "6",
+    "seven": "7",
+    "eight": "8",
+    "nine":  "9",
+}
 simple_keys = {k: k for k in simple_keys}
 arrows = {k: k for k in arrows}
 keys = {}
@@ -59,13 +76,13 @@ def insert(s):
 
 def get_modifiers(m):
     try:
-        return [modifiers[mod] for mod in m["basic.modifiers"]]
+        return [modifiers[mod] for mod in m["modifiers_list"]]
     except KeyError:
         return []
 
 
 def get_keys(m):
-    groups = ["basic.keys", "basic.arrows", "basic.digits", "basic.alphabet"]
+    groups = ["keys_list", "arrows_list", "digits_list", "alphabet_list"]
     for group in groups:
         try:
             return [keymap[k] for k in m[group]]
