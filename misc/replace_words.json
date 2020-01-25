@@ -158,5 +158,7 @@
     "CarField": "CharField",
     "ChartField": "CharField",
     "OnetoOneField": "OneToOneField",
-    "ManytoManyField": "ManyToManyField"
+    "ManytoManyField": "ManyToManyField",
+    "griffey us": "grafeas",
+    "griffis": "grafeas"
 }

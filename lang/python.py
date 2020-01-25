@@ -1,8 +1,24 @@
-from talon.voice import Context, Key
+from talon.voice import Context, Key, Str
 
-# from user.misc.my_utils import snake_text, smash_title_text
-#sdlsdl
+from ..text.formatters import FormatText
+from ..text.formatters import formatters
+
 context = Context("python")
+
+def snaketext(m):
+    # I can't figure out how to just pass in a formatter now that it's all
+    # one magic object.
+    f = []
+
+    for i, word in enumerate(str(m.dgndictation).split()):
+        f.append(formatters['snake'][1](i, word, i))
+
+    Str(''.join(f))(None)
+
+
+# def format_test(m):
+#     print(m._words)
+#     Str(FormatText(m))(None)
 
 context.keymap(
     {
@@ -29,7 +45,9 @@ context.keymap(
         "from import": ["from import ", Key("alt-left"), Key("space"), Key("left")],
         "for in": ["for in ", Key("alt-left"), Key("space"), Key("left")],
         "set trace": "import ipdb; ipdb.set_trace()",
-        # "start function <dgndictation> [over]": ["def ", snake_text, "():", Key("left"), Key("left")],
+        "start function <dgndictation> [over]": ["def ", snaketext, "():", Key("left"), Key("left")],
         # "start class <dgndictation> [over]": ['class ', smash_title_text, "():", Key("left"), Key("left")],
     }
 )
+
+

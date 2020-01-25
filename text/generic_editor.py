@@ -1,4 +1,6 @@
-from talon.voice import Key, press, Str, Context
+from time import sleep
+
+from talon.voice import Key, press, Str, Context, Rep, talon
 from ..utils import parse_word, numerals, optional_numerals, text_to_number, jump_to_target
 
 ctx = Context("generic_editor")
@@ -60,6 +62,17 @@ def jump_to(m):
     target = get_first_word(m)
     jump_to_target(target)
 
+def jump_to_line(m):
+    if str(m) == "spring":
+        return
+    words = str(m).split()
+    words.pop(0)
+    words = int(''.join(words))
+    press("ctrl-shift-up")
+    press("cmd-pageup")
+    for _ in range(words-1):
+        press("down")
+    press("ctrl-shift-.")
 
 keymap = {
     "(trundle | comment)": toggle_comments,
@@ -67,7 +80,8 @@ keymap = {
     + numerals(): jump_to_bol_and(toggle_comments),  # noop for plain/text
     "snipline" + optional_numerals(): jump_to_bol_and(snipline),
     "sprinkle" + optional_numerals(): jump_to_bol,
-    "spring" + optional_numerals(): jump_to_eol_and(jump_to_beginning_of_text),
+    # "spring" + optional_numerals(): jump_to_eol_and(jump_to_beginning_of_text),
+    "spring" + optional_numerals(): jump_to_line,
     "sprinkoon" + numerals(): jump_to_eol_and(lambda: press("enter")),
     "dear" + optional_numerals(): jump_to_eol_and(lambda: None),
     "smear" + optional_numerals(): jump_to_eol_and(jump_to_nearly_end_of_line),
@@ -89,16 +103,19 @@ keymap = {
     "(select | cell) (start | begin | pop)": Key("cmd-shift-left"),
     # edit
     "paste match": Key("cmd-shift-v"),
-    "shove": Key("cmd-]"),
-    "tug": Key("cmd-["),
+    "tug": [Key("shift-end"), Key('shift-tab'), Key('escape')],
+    "pull": [Key("shift-end"), Key('tab'), Key('escape')],
     "(scrap | scratch | delete) word": Key("alt-backspace"),
     "(scrap | scratch | delete) (begin | start)": Key("cmd-backspace"),
     # navigation
     "push": Key("cmd-right"),
     "pop": Key("cmd-left"),
-    "step": Key("alt-right"),
-    "stone": Key("alt-left"),
+    "jump": Key("alt-right"),
+    "opjump": Key("alt-left"),
     "jump to <dgndictation>": jump_to,
+    "junk": Key("backspace"),
+    "home": Key("home"),
+    "end": Key("end"),
 }
 
 ctx.keymap(keymap)

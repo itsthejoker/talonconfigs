@@ -9,6 +9,7 @@ keymap = {
     "editor": Key("esc"),
     "terminal": Key("alt-f12"),
     "inspect": Key("cmd-down"),
+    "save": Key("cmd+s"),
 }
 
 ctx.keymap(keymap)

@@ -92,14 +92,17 @@ def optional_numerals():
 def text_to_number(m):
     tmp = [str(s).lower() for s in m]
     words = [parse_word(word) for word in tmp]
+    print(words)
 
     result = 0
     factor = 1
     for word in reversed(words):
+        print("FARTS-->", word)
         if word not in optional_numerals():
             # we consumed all the numbers and only the command name is left.
             break
 
+        print(result)
         result = result + factor * int(numeral_map()[word])
         factor = 10 * factor
 
