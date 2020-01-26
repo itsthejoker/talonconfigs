@@ -165,5 +165,17 @@
   "CarField": "CharField",
   "ChartField": "CharField",
   "OnetoOneField": "OneToOneField",
-  "ManytoManyField": "ManyToManyField"
+  "ManytoManyField": "ManyToManyField",
+  "griffey us": "grafeas",
+  "griffis": "grafeas",
+  "jango": "django",
+  "jingo": "django",
+  "get help": "github",
+  "get hub": "github",
+  "band hammer": "banhammer",
+  "Ben Hammer": "banhammer",
+  "Ban Hammer": "banhammer",
+  "ban hammer": "banhammer",
+  "ben hammer": "banhammer",
+  "test": "asdfasdfasdf"
 }

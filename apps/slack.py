@@ -1,7 +1,25 @@
 from talon.voice import Context, Key
-from ..utils import text
+from ..utils import text, insert, parse_words, join_words
 
 ctx = Context("slack", bundle="com.tinyspeck.slackmacgap")
+
+emoji_map = {
+    "thumbs up": ":+1:",
+    "okay": ":ok_hand:",
+    "check": ":heavy_check_mark:",
+    "crossed fingers": ":crossed_fingers:",
+    "fingers": ":crossed_fingers:",
+    "pray": ":pray:",
+    "shrug": r"¯\_(ツ)_/¯",
+    "tada": ":tada:",
+    "~": ":tada:",
+    "banhammer": ":banhammer:",
+    "fancy banhammer": ":banhammer_fancy:"
+}
+
+def emoji_picker(m):
+    return insert(emoji_map[join_words(parse_words(m))])
+    # return insert("what")
 
 keymap = {
     # Channel
@@ -60,6 +78,8 @@ keymap = {
     "(slack | lack) invite": Key("a"),
     # Miscellaneous
     "(slack | lack) shortcuts": Key("cmd-/"),
+    "send": Key("enter"),
+    "emo <dgndictation>": emoji_picker
 }
 
 ctx.keymap(keymap)
