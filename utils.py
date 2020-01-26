@@ -46,12 +46,10 @@ def replace_words(words, count):
     while i < len(words) - count + 1:
         phrase = words[i : i + count]
         key = " ".join(phrase)
-        print("Key: ", key)
         if key in mapping:
             new_words.append(mapping[key])
             i = i + count
         else:
-            print(phrase)
             new_words.append(phrase[0])
             i = i + 1
 
@@ -63,7 +61,6 @@ def parse_words(m):
     words = list(map(parse_word, m.dgndictation.words))
     for i in range(1, 4):
         words = replace_words(words, i)
-        print(words)
 
     return words
 
