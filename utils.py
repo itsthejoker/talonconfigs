@@ -1,8 +1,11 @@
-from talon.voice import Str, press
+import json
+
 import talon.clip as clip
 from talon import resource
+from talon.voice import Str, press
+from time import sleep
+
 from .bundle_groups import FILETYPE_SENSITIVE_BUNDLES
-import json
 
 # overrides are used as a last resort to override the output. Some uses:
 # - frequently misheard words
@@ -34,8 +37,35 @@ def join_words(words, sep=" "):
     return out
 
 
+def replace_words(words, count):
+    if len(words) < count:
+        return words
+
+    new_words = []
+    i = 0
+    while i < len(words) - count + 1:
+        phrase = words[i : i + count]
+        key = " ".join(phrase)
+        print("Key: ", key)
+        if key in mapping:
+            new_words.append(mapping[key])
+            i = i + count
+        else:
+            print(phrase)
+            new_words.append(phrase[0])
+            i = i + 1
+
+    new_words.extend(words[i:])
+    return new_words
+
+
 def parse_words(m):
-    return list(map(parse_word, m.dgndictation.words))
+    words = list(map(parse_word, m.dgndictation.words))
+    for i in range(1, 4):
+        words = replace_words(words, i)
+        print(words)
+
+    return words
 
 
 def insert(s):
@@ -92,17 +122,14 @@ def optional_numerals():
 def text_to_number(m):
     tmp = [str(s).lower() for s in m]
     words = [parse_word(word) for word in tmp]
-    print(words)
 
     result = 0
     factor = 1
     for word in reversed(words):
-        print("FARTS-->", word)
         if word not in optional_numerals():
             # we consumed all the numbers and only the command name is left.
             break
 
-        print(result)
         result = result + factor * int(numeral_map()[word])
         factor = 10 * factor
 
