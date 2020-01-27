@@ -18,8 +18,10 @@ emoji_map = {
 }
 
 def emoji_picker(m):
-    return insert(emoji_map[join_words(parse_words(m))])
-    # return insert("what")
+    try:
+        return insert(emoji_map[join_words(parse_words(m))])
+    except KeyError:
+        return insert("You asked for '{}', but it's not in the map.")
 
 keymap = {
     # Channel
